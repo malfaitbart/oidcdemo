@@ -1,0 +1,32 @@
+@page "/Articles"
+@using BlazorWebAppOidc.Models.Articles
+@using BlazorWebAppOidc.Services.Interfaces
+
+@inject IArticleService ArticleService
+
+<PageTitle>Articles</PageTitle>
+
+<h1>Articles</h1>
+
+@if (articles == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    @foreach (var item in articles)
+    {
+        <span>@item.DescriptionN</span> <br />
+    }
+}
+
+@code {
+    private IEnumerable<ArticleShortDto>? articles;
+
+    protected override async Task OnInitializedAsync()
+    {
+        articles = await ArticleService.Get();
+
+        await base.OnInitializedAsync();
+    }
+}
